@@ -6,8 +6,6 @@ import { createStore, applyMiddleware } from 'redux';
 import './App.css';
 import reducers from './reducers';
 
-import PostList from './containers/post-list';
-
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 function App() {
@@ -20,7 +18,6 @@ function App() {
     >
       <div className="App">
         <h1>Mon app ! </h1>
-        <PostList />
       </div>
     </Provider>
   );
