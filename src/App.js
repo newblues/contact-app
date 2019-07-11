@@ -3,12 +3,31 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import reducers from './reducers';
+
+import SearchContainer from './containers/search-container';
+import GifContainer from './containers/gif-container';
+import FavoriteContainer from './containers/favorite-container';
+import NavBar from './containers/navBar';
+import GifDetails from './components/gif-details-component';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
-function App() {
+const home = () => {
+  return (
+    <div>
+      <SearchContainer />
+      <GifContainer />
+    </div>
+  );
+};
+
+const App = () => {
   return (
     <Provider
       store={createStoreWithMiddleware(
@@ -16,11 +35,18 @@ function App() {
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
       )}
     >
-      <div className="App">
-        <h1>Mon app ! </h1>
-      </div>
+      <Router>
+        <div>
+          <NavBar />
+          <Switch>
+            <Route path="/" exact component={home} />
+            <Route path="/favorite" exact component={FavoriteContainer} />
+            <Route path="/:id" exact component={GifDetails} />
+          </Switch>
+        </div>
+      </Router>
     </Provider>
   );
-}
+};
 
 export default App;
