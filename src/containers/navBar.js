@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Collapse, Navbar, NavbarToggler, Nav } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavbarBrand, NavItem } from 'reactstrap';
+
+const styles = {
+  navBar: {
+    height: '60px',
+  },
+};
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -20,16 +26,23 @@ class NavBar extends React.Component {
 
   render() {
     const { favorite } = this.props;
-    console.log('TLC: NavBar -> render -> favorite', favorite.length);
 
     return (
       <div>
-        <Navbar color="light" light expand="md">
-          <Link to="/">Home</Link>
+        <Navbar style={styles.navBar} fixed="top" color="light" light expand="md">
+          <NavbarBrand>
+            <Link to="/">FavyGiphy</Link>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <Link to="/favorite">{favorite.length}Favorite</Link>
+              <NavItem className="mr-3">
+                <Link to="/">Home</Link>
+              </NavItem>
+              <NavItem>
+                {' '}
+                <Link to="/favorite">My Favorite {favorite.length}</Link>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
@@ -40,7 +53,7 @@ class NavBar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    favorite: state.favorite.favorite,
+    favorite: state.gif.favorite,
   };
 };
 export default connect(

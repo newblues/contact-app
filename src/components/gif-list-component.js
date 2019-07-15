@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardTitle, Button, Col, CardImg } from 'reactstrap';
+import { Card, CardBody, CardTitle, Button, Col, CardImg, CardColumns, CardDeck } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 
 const styles = {
   icon: {
-    color: 'green',
+    color: '#ecf0f1',
   },
   iconIsFavorite: {
-    color: 'yellow',
+    color: '#f1c40f',
   },
 };
 
@@ -27,8 +27,8 @@ const GifList = props => {
     setFavorite(!isFavorite);
   };
 
-  const getDetails = id => {
-    props.getDetailsCallBack(id);
+  const getDetails = gif => {
+    props.getDetailsCallBack(gif);
   };
 
   return (
@@ -37,15 +37,13 @@ const GifList = props => {
         <Card>
           <Link to={`/${gif.id}`}>
             <CardImg
-              onClick={() => getDetails(gif.id)}
-              width="100%"
-              height="120"
+              onClick={() => getDetails(gif)}
+              width="10%"
               src={gif.images.original.url}
               alt="Card image cap"
             />
           </Link>
           <CardBody>
-            <CardTitle>{gif.title}</CardTitle>
             {isFavorite ? (
               <FaStar
                 style={styles.iconIsFavorite}

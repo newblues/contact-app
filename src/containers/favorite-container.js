@@ -4,6 +4,7 @@ import { Container, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import FavoriteList from '../components/favorite-list-component';
+import { fetchGif, addFavorite, deleteFavorite, fetchGifById } from '../actions/index';
 
 class FavoriteContainer extends Component {
   constructor(props) {
@@ -11,23 +12,27 @@ class FavoriteContainer extends Component {
     this.state = {};
   }
 
+  deleteFavorite = id => {
+    const { deleteFavorite } = this.props;
+    deleteFavorite(id);
+  };
+
   renderFavorite = () => {
     const { favorite } = this.props;
 
-    if (favorite.favorite) {
-      return favorite.favorite.map(gif => {
-        return <FavoriteList key={gif.id} gif={gif} />;
+    if (favorite) {
+      return favorite.map(gif => {
+        return <FavoriteList key={gif.id} gif={gif} deleteFavoriteCallBack={this.deleteFavorite} />;
       });
     }
   };
 
   render() {
     const { favorite } = this.props;
-    console.log('TLC: FavoriteContainer -> render -> favorite', favorite);
 
     return (
       <>
-        {favorite.favorite ? (
+        {favorite ? (
           <Container>
             <Row>{this.renderFavorite()}</Row>
           </Container>
@@ -40,15 +45,15 @@ class FavoriteContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({}, dispatch),
+  ...bindActionCreators({ deleteFavorite }, dispatch),
 });
 
 const mapStateToProps = state => {
   return {
-    favorite: state.favorite,
+    favorite: state.gif.favorite,
   };
 };
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(FavoriteContainer);

@@ -3,6 +3,7 @@ import { AT } from '../actions/action-types';
 const initialState = {
   pending: false,
   gif: [],
+  favorite: [],
   error: null,
 };
 
@@ -24,6 +25,17 @@ export default function ReducerGif(state = initialState, action) {
         ...state,
         pending: null,
         error: action.error,
+      };
+    case AT.ADD_FAVORITE:
+      return {
+        ...state,
+        favorite: [...state.favorite, action.payload],
+      };
+    case AT.DELETE_FAVORITE:
+      const filteredFavorite = state.favorite.filter(id => id.id !== action.payload);
+      return {
+        ...state,
+        favorite: filteredFavorite,
       };
     default:
       return state;

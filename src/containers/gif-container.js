@@ -25,10 +25,8 @@ class GifContainer extends Component {
     console.log('je delete mon favorite !!');
   };
 
-  getDetails = id => {
-    const { fetchGifById } = this.props;
-    fetchGifById(id);
-    console.log('TLC: GifContainer -> id', id);
+  getDetails = gif => {
+    console.log('TLC: GifContainer -> id', gif);
   };
 
   renderGif = () => {

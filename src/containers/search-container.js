@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
-import { Button, Form, Label, Input } from 'reactstrap';
+// import { Button, Form, Label, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button, Input, Form, Label } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchGif } from '../actions/index';
+
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 400,
+    width: '100vw',
+    backgroundColor: '#bdc3c7',
+  },
+};
 
 class SearchContainer extends Component {
   constructor() {
@@ -28,20 +41,24 @@ class SearchContainer extends Component {
     const { search } = this.state;
 
     return (
-      <div>
+      <div style={styles.container}>
+        <h1>Welcome to my FavyGiphy App</h1>
+
         <Form onSubmit={this.handleSubmit}>
-          {' '}
-          <Label>
+          <InputGroup>
             <Input
               type="text"
               value={search}
               onChange={this.handleSearch}
-              placeholder="Search for Gif..."
-            />{' '}
-          </Label>
-          <Button type="submit" value="Submit" color="primary">
-            Confirm
-          </Button>{' '}
+              placeholder="Search all Gifs..."
+              addonType="append"
+            />
+            <InputGroupAddon>
+              <Button type="submit" value="Submit" color="secondary">
+                Search
+              </Button>
+            </InputGroupAddon>
+          </InputGroup>{' '}
         </Form>
       </div>
     );
