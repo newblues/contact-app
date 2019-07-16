@@ -14,7 +14,7 @@ const styles = {
 const FavoriteList = props => {
   return (
     <Col xs="12" md="6" lg="3">
-      <>
+      <div>
         <Card>
           <CardImg
             width="50%"
@@ -31,7 +31,7 @@ const FavoriteList = props => {
             />{' '}
           </CardBody>
         </Card>
-      </>
+      </div>
     </Col>
   );
 };

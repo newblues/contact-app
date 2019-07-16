@@ -20,7 +20,7 @@ const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 const home = () => {
   return (
-    <div>
+    <div className="App">
       <SearchContainer />
       <GifContainer />
     </div>
@@ -36,7 +36,7 @@ const App = () => {
       )}
     >
       <Router>
-        <div>
+        <div className="App">
           <NavBar />
           <Switch>
             <Route path="/" exact component={home} />

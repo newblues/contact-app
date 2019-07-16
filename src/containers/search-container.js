@@ -13,7 +13,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: 400,
-    width: '100vw',
+    width: '100%',
     backgroundColor: '#bdc3c7',
   },
 };
@@ -51,9 +51,8 @@ class SearchContainer extends Component {
               value={search}
               onChange={this.handleSearch}
               placeholder="Search all Gifs..."
-              addonType="append"
             />
-            <InputGroupAddon>
+            <InputGroupAddon addonType="append">
               <Button type="submit" value="Submit" color="secondary">
                 Search
               </Button>

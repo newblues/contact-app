@@ -10,12 +10,16 @@ import GifList from '../components/gif-list-component';
 class GifContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isLike: false,
+    };
   }
 
-  addFavorite = gif => {
+  addFavorite = (gif, isFavorite) => {
     const { addFavorite } = this.props;
     addFavorite(gif);
+
+    console.log('fav or not', isFavorite);
   };
 
   deleteFavorite = id => {
@@ -25,15 +29,21 @@ class GifContainer extends Component {
     console.log('je delete mon favorite !!');
   };
 
-  getDetails = gif => {
-    console.log('TLC: GifContainer -> id', gif);
-  };
+  getDetails = gif => {};
 
   renderGif = () => {
     const { gif, pending } = this.props;
 
     if (pending !== true) {
       return gif.map(gif => {
+        const isLike = false;
+        // const isFound = this.props.gif.some(r => this.props.favorite.indexOf(r) >= 0);
+        // if (isFound === true) {
+        //   this.setState({
+        //     isLike: isFound,
+        //   });
+        // }
+
         return (
           <GifList
             key={gif.id}
@@ -41,6 +51,7 @@ class GifContainer extends Component {
             addFavoriteCallBack={this.addFavorite}
             deleteFavoriteCallBack={this.deleteFavorite}
             getDetailsCallBack={this.getDetails}
+            // isLike={this.state.isLike}
           />
         );
       });
@@ -50,8 +61,10 @@ class GifContainer extends Component {
   render() {
     const { pending } = this.props;
 
+    console.log(this.state.isFavorite);
+
     return (
-      <>
+      <div>
         {pending !== true ? (
           <Container>
             <Row>{this.renderGif()}</Row>
@@ -59,7 +72,7 @@ class GifContainer extends Component {
         ) : (
           <h5>Loading...</h5>
         )}
-      </>
+      </div>
     );
   }
 }
@@ -71,6 +84,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
   return {
     gif: state.gif.gif,
+    favorite: state.gif.favorite,
     pending: state.gif.pending,
   };
 };

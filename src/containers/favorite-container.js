@@ -31,7 +31,7 @@ class FavoriteContainer extends Component {
     const { favorite } = this.props;
 
     return (
-      <>
+      <div>
         {favorite ? (
           <Container>
             <Row>{this.renderFavorite()}</Row>
@@ -39,7 +39,7 @@ class FavoriteContainer extends Component {
         ) : (
           <h5>Nothing...</h5>
         )}
-      </>
+      </div>
     );
   }
 }

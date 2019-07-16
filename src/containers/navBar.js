@@ -30,20 +30,13 @@ class NavBar extends React.Component {
     return (
       <div>
         <Navbar style={styles.navBar} fixed="top" color="light" light expand="md">
-          <NavbarBrand>
-            <Link to="/">FavyGiphy</Link>
-          </NavbarBrand>
+          {/* <Link to="/">FavyGiphy</Link> */}
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem className="mr-3">
-                <Link to="/">Home</Link>
-              </NavItem>
-              <NavItem>
-                {' '}
-                <Link to="/favorite">My Favorite {favorite.length}</Link>
-              </NavItem>
-            </Nav>
+            <Link to="/" className="mr-3">
+              Home
+            </Link>
+            <Link to="/favorite">My Favorite {favorite.length}</Link>
           </Collapse>
         </Navbar>
       </div>
