@@ -3,7 +3,7 @@ import { Container, Row } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchGif, addFavorite, deleteFavorite, fetchGifById } from '../actions/index';
+import { fetchGif, addFavorite, deleteFavorite } from '../actions/index';
 
 import GifList from '../components/gif-list-component';
 
@@ -15,43 +15,28 @@ class GifContainer extends Component {
     };
   }
 
-  addFavorite = (gif, isFavorite) => {
+  addFavorite = gif => {
     const { addFavorite } = this.props;
     addFavorite(gif);
-
-    console.log('fav or not', isFavorite);
   };
 
   deleteFavorite = id => {
     const { deleteFavorite } = this.props;
     deleteFavorite(id);
-
-    console.log('je delete mon favorite !!');
   };
 
-  getDetails = gif => {};
-
   renderGif = () => {
-    const { gif, pending } = this.props;
+    const { gif, pending, favorite } = this.props;
 
     if (pending !== true) {
       return gif.map(gif => {
-        const isLike = false;
-        // const isFound = this.props.gif.some(r => this.props.favorite.indexOf(r) >= 0);
-        // if (isFound === true) {
-        //   this.setState({
-        //     isLike: isFound,
-        //   });
-        // }
-
         return (
           <GifList
             key={gif.id}
             gif={gif}
             addFavoriteCallBack={this.addFavorite}
             deleteFavoriteCallBack={this.deleteFavorite}
-            getDetailsCallBack={this.getDetails}
-            // isLike={this.state.isLike}
+            starred={favorite.some(elem => gif.id === elem.id)}
           />
         );
       });
@@ -60,8 +45,6 @@ class GifContainer extends Component {
 
   render() {
     const { pending } = this.props;
-
-    console.log(this.state.isFavorite);
 
     return (
       <div>
@@ -78,7 +61,7 @@ class GifContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({ fetchGif, addFavorite, deleteFavorite, fetchGifById }, dispatch),
+  ...bindActionCreators({ fetchGif, addFavorite, deleteFavorite }, dispatch),
 });
 
 const mapStateToProps = state => {

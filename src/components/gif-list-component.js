@@ -24,14 +24,13 @@ const styles = {
 };
 
 const GifList = props => {
-  const { gif, isLike } = props;
+  const { gif, starred } = props;
 
   const [isFavorite, setFavorite] = useState(false);
 
   const addFavorite = gif => {
     props.addFavoriteCallBack(gif, !isFavorite);
     setFavorite(!isFavorite);
-    console.log('TLC: isFavorite', !isFavorite);
   };
 
   const deleteFavorite = gif => {
@@ -39,22 +38,16 @@ const GifList = props => {
     setFavorite(!isFavorite);
   };
 
-  const getDetails = gif => {
-    props.getDetailsCallBack(gif);
-  };
+  console.log(starred);
 
   return (
     <Col xs="12" md="6" lg="3">
       <Card>
         <Link to={`/${gif.id}`}>
-          <CardImg
-            onClick={() => getDetails(gif)}
-            src={gif.images.original.url}
-            alt="Card image cap"
-          />
+          <CardImg src={gif.images.original.url} alt="Card image cap" />
         </Link>
         <CardBody>
-          {isFavorite ? (
+          {starred ? (
             <FaStar style={styles.iconIsFavorite} size="25px" onClick={() => deleteFavorite(gif)} />
           ) : (
             <FaStar style={styles.icon} size="25px" onClick={() => addFavorite(gif)} />

@@ -18,22 +18,6 @@ export const fetchGif = search => {
   };
 };
 
-export const fetchGifById = id => {
-  return function(dispatch) {
-    dispatch({ type: AT.FETCH_GIFBYID_PENDING });
-    fetch(`${END_POINT}gif_id=${id}&api_key=${API_KEY}`, {
-      mode: 'no-cors',
-    })
-      .then(response => response.json())
-      .then(response => {
-        dispatch({ type: AT.FETCH_GIFBYID_SUCCESS, payload: response.data });
-      })
-      .catch(error => {
-        dispatch({ type: AT.FETCH_GIFBYID_ERROR, payload: error });
-      });
-  };
-};
-
 export const addFavorite = gif => {
   return function(dispatch) {
     dispatch({
