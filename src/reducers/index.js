@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import ReducerGif from './reducer-gif';
+import ReducerContact from './reducer-contact';
 
 const rootReducer = combineReducers({
-  gif: ReducerGif,
+  contact: ReducerContact,
 });
 
 export default rootReducer;

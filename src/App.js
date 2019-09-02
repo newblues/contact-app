@@ -9,23 +9,10 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import reducers from './reducers';
-
-import SearchContainer from './containers/search-container';
-import GifContainer from './containers/gif-container';
-import FavoriteContainer from './containers/favorite-container';
-import NavBar from './containers/navBar';
-import GifDetails from './components/gif-details-component';
+import Home from './home/home';
+import Nav from './nav/nav';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-
-const home = () => {
-  return (
-    <div className="App">
-      <SearchContainer />
-      <GifContainer />
-    </div>
-  );
-};
 
 const App = () => {
   return (
@@ -37,11 +24,10 @@ const App = () => {
     >
       <Router>
         <div className="App">
-          <NavBar />
+          <Nav />
           <Switch>
-            <Route path="/" exact component={home} />
-            <Route path="/favorite" exact component={FavoriteContainer} />
-            <Route path="/:id" exact component={GifDetails} />
+            <Route path="/" exact component={Home} />
+            {/* <Route path="/favorite" exact component={FavoriteConta} /> */}
           </Switch>
         </div>
       </Router>

@@ -1,28 +1,77 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable func-names */
 import { AT } from './action-types';
 
-const API_KEY = '4ueA0b70vM5mxJfQvosMszE6hyddpNMj';
-const END_POINT = `http://api.giphy.com/v1/gifs/`;
+const END_POINT = `https://jsonplaceholder.typicode.com/users`;
 
-export const fetchGif = search => {
+export const fetchContact = () => {
   return function(dispatch) {
-    dispatch({ type: AT.FETCH_GIF_PENDING });
-    fetch(`${END_POINT}search?q=${search}&api_key=${API_KEY}&limit=5}`)
-      .then(response => response.json())
+    dispatch({ type: AT.FETCH_CONTACT_PENDING });
+    fetch(`${END_POINT}`)
       .then(response => {
-        dispatch({ type: AT.FETCH_GIF_SUCCESS, payload: response.data });
+        return response.json();
+      })
+      .then(json => {
+        dispatch({ type: AT.FETCH_CONTACT_SUCCESS, payload: json });
       })
       .catch(error => {
-        dispatch({ type: AT.FETCH_GIF_ERROR, payload: error });
+        dispatch({ type: AT.FETCH_CONTACT_ERROR, payload: error });
       });
   };
 };
 
-export const addFavorite = gif => {
+export function addContact(newContact) {
+  return function(dispatch) {
+    fetch(`${END_POINT}`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        name: newContact.name,
+        username: newContact.userName,
+        email: newContact.email,
+      }),
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        dispatch({ type: AT.ADD_CONTACT, payload: json });
+        console.log('TLC: addContact -> json', json);
+      })
+      .catch(error => {
+        dispatch({ type: AT.FETCH_CONTACT_ERROR, payload: error });
+      });
+  };
+}
+
+export const deleteContact = id => {
+  return function(dispatch) {
+    fetch(`${END_POINT}/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(response => {
+        if (response.status === 200) {
+          return response.json();
+        }
+        throw new Error('Something went wrong ...');
+      })
+      .then(() => {
+        dispatch({ type: AT.DELETE_CONTACT, payload: id });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+};
+
+export const addFavorite = contact => {
   return function(dispatch) {
     dispatch({
       type: AT.ADD_FAVORITE,
-      payload: gif,
+      payload: contact,
     });
   };
 };
