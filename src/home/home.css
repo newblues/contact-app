@@ -1,2 +1,20 @@
-.container {
+.myrow :hover {
+  background-color: #f1f3f4;
+}
+
+.firstrow {
+  margin: 0px 0 15px 0;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.homecontainer {
+  margin-top: 80px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }

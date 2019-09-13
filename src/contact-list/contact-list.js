@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 
-import { Container, Col, Table } from 'reactstrap';
+import { Col } from 'reactstrap';
 
 import './contact-list.css';
 
-import { FaEdit, FaTrashAlt, FaStar } from 'react-icons/fa';
+import { FaTrashAlt, FaStar } from 'react-icons/fa';
+
+import ContacUpdate from '../contact-update/contact-update';
 
 const styles = {
-  icon: {
+  star: {
     color: '#ecf0f1',
   },
-  iconIsFavorite: {
-    color: '#f1c40f',
+  starIsFavorite: {
+    color: '#0069D9',
   },
 };
 
 const ContactList = props => {
+  //
   const { contact, star } = props;
 
   const [isFavorite, setFavorite] = useState(false);
@@ -30,23 +33,54 @@ const ContactList = props => {
     setFavorite(!isFavorite);
   };
 
+  const stringToColor = string => {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let colour = '#';
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      colour += `00${value.toString(16)}`.substr(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return colour;
+  };
+
   return (
     <div className="rowContainer">
-      <Col xs="1">
-        {' '}
-        <img className="rounded-circle" src="https://picsum.photos/35" alt="new" />
+      <Col xs="1" className="" onClick={() => props.getContactCallBack(contact)}>
+        <div style={{ backgroundColor: stringToColor(contact.username) }} className="circle">
+          <span className="initials">{contact.username.charAt(0)}</span>
+        </div>
       </Col>
-      <Col xs="3">{contact.name}</Col>
-      <Col xs="3">{contact.username}</Col>
-      <Col xs="3">{contact.email}</Col>
-      <Col xs="2">
+      <Col className="" xs="3" onClick={() => props.getContactCallBack(contact)}>
+        {contact.username}
+      </Col>
+      <Col className="d-none d-md-block" onClick={() => props.getContactCallBack(contact)} md="3">
+        {contact.email}
+      </Col>
+      <Col className="d-none d-lg-block" onClick={() => props.getContactCallBack(contact)} lg="3">
+        {contact.phone}
+      </Col>
+      <Col xs="4" md="2" className="d-flex justify-content-around align-items-center ">
         {star ? (
-          <FaStar style={styles.iconIsFavorite} onClick={() => deleteFavorite(contact)} />
+          <FaStar
+            className="icon"
+            style={styles.starIsFavorite}
+            onClick={() => deleteFavorite(contact)}
+          />
         ) : (
-          <FaStar style={styles.icon} onClick={() => addFavorite(contact)} />
+          <FaStar className="icon" style={styles.star} onClick={() => addFavorite(contact)} />
         )}
-        <FaEdit />
-        <FaTrashAlt className="trash" onClick={() => props.deleteContactCallBack(contact)} />
+        <ContacUpdate contact={contact} />
+        <FaTrashAlt className="icon" onClick={() => props.deleteContactCallBack(contact)} />
       </Col>
     </div>
   );

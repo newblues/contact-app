@@ -27,7 +27,7 @@ const App = () => {
           <Nav />
           <Switch>
             <Route path="/" exact component={Home} />
-            {/* <Route path="/favorite" exact component={FavoriteConta} /> */}
+            <Route path="/favorite" exact component={Home} />
           </Switch>
         </div>
       </Router>

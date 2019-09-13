@@ -1,23 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
 
 import { FaUsers, FaStar } from 'react-icons/fa';
+import { displayFavorite } from '../actions/index';
 
-import ModalExample from '../modal/modal';
+import styles from './nav.module.css';
+
+import AddContact from '../add-contact/add-contact';
+import SearchBar from '../search-bar/search-bar';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -36,26 +31,35 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { contact, favorite } = this.props;
+    const { contact, favorite, displayFavorite } = this.props;
     return (
       <div>
-        <Navbar color="light" light expand="md">
-          {/* <NavbarBrand href="/">Contact App</NavbarBrand> */}
-          <ModalExample />
+        <Navbar color="light" className="fixed-top" light expand="md">
+          <div className={styles.left}>
+            <Link to="/" onClick={() => displayFavorite(false)}>
+              <FaUsers className={styles.icon} />
+              <span className="ml-2 mr-2"> Contacts</span>
+              <span className="mr-5">{contact.length}</span>
+            </Link>
+            <Link to="/favorite" onClick={() => displayFavorite(true)}>
+              <FaStar className={styles.icon} />
+              <span className="ml-2 mr-2"> Favorites</span>
+              <span>{favorite.length}</span>
+            </Link>
+          </div>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="#">
+                <NavLink>
                   {' '}
-                  <FaUsers />
-                  Contacts {contact.length}
+                  <SearchBar />
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">
-                  <FaStar />
-                  Favorites {favorite.length}
+                <NavLink>
+                  {' '}
+                  <AddContact />
                 </NavLink>
               </NavItem>
             </Nav>
@@ -72,7 +76,12 @@ const mapStateToProps = state => {
     favorite: state.contact.favorite,
   };
 };
+
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({ displayFavorite }, dispatch),
+});
+
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(NavBar);

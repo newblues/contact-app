@@ -1,11 +1,33 @@
+:root {
+  --avatar-size: 40px;
+  /* change this value anything, e.g., 100px, 10rem, etc. */
+}
+
 .rowContainer {
   display: flex;
   height: 50px;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
-.trash {
+.icon {
   cursor: pointer;
+  font-size: 1.1em;
+}
+
+.circle {
+  background-color: #ccc;
+  border-radius: 50%;
+  height: var(--avatar-size);
+  text-align: center;
+  width: var(--avatar-size);
+}
+
+.initials {
+  font-size: calc(var(--avatar-size) / 2); /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: calc(var(--avatar-size) / 4); /* 25% of parent */
 }
